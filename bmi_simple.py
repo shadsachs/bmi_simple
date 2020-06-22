@@ -4,9 +4,6 @@ from tkinter import ttk
 import datetime
 from tkinter import messagebox as mb
 
-"""A BMI APP GUI BY SHADRACK SACHIKONYE, EMAIL: shadreck.sachikonye@gmail.com, Phone: +447951577999"""
-
-
 class BMIFrame(ttk.Frame):
 
     def __init__(self, parent):
@@ -16,7 +13,7 @@ class BMIFrame(ttk.Frame):
         self.dt = datetime.datetime.now()
         self.vld = self.register(self.only_numeric_input)
 
-        # defining string variables
+        """defining string variables"""
         self.name = tk.StringVar()
         self.bmi_weight = tk.StringVar()
         self.bmi_height = tk.StringVar()
@@ -27,7 +24,7 @@ class BMIFrame(ttk.Frame):
         self.imp_stones = tk.StringVar()
         self.imp_bmi = tk.StringVar()
 
-        # radio buttons for methods
+        """radio buttons for user to determine which measurement method they wish to use"""
         self.metric = tk.StringVar()
         self.imperial = tk.StringVar()
 
@@ -38,7 +35,7 @@ class BMIFrame(ttk.Frame):
                                     state='normal')
         self.but2.grid(row=0, column=2, sticky=W)
 
-    # display metric grid components
+    """ function to display metric grid components """
 
     def MetricButtons(self):
 
@@ -62,7 +59,7 @@ class BMIFrame(ttk.Frame):
         ttk.Button(self, text="Calculate BMI", command=self.calculate).grid(row=6, column=1, sticky=E)
         ttk.Button(self, text="Clear", command=self.clear).grid(row=7, column=1, sticky=E)
 
-    # display imperial grid
+    """function displays imperial grid for the user"""
 
     def ImperialButtons(self):
 
@@ -91,7 +88,8 @@ class BMIFrame(ttk.Frame):
         ttk.Button(self, text="Calculate BMI", command=self.calculate).grid(row=6, column=3, sticky=E)
         ttk.Button(self, text="Clear", command=self.clear).grid(row=7, column=3, sticky=E)
 
-    # metric bmi calculation
+    """ BMI calculation based on the metric system, applies for both systems since we display/convert imperial to metric 
+    before calculating and write all entries to the a file including datetime"""
 
     def calculate(self):
 
@@ -122,8 +120,9 @@ class BMIFrame(ttk.Frame):
             self.bmi_info_message()
 
         fo.close()
-
-    def clear(self):  # calls the set methods for all str var and sets them to empty strings
+        
+    """ functioning calls the set methods for all str var and sets to empty str"""
+    def clear(self): 
 
         self.name.set("")
         self.bmi.set("")
@@ -143,6 +142,8 @@ class BMIFrame(ttk.Frame):
         self.but2 = ttk.Radiobutton(self, text="Imperial", command=self.ImperialButtons, value="Imperial",
                                     state='normal')
         self.but2.grid(row=0, column=2, sticky=W)
+        
+    """converts metric inputs to imperial"""    
 
     def imperial_from_metric(self):
 
@@ -173,6 +174,7 @@ class BMIFrame(ttk.Frame):
         ttk.Entry(self, textvariable=self.imp_feet, state="readonly").grid(row=3, column=3, sticky=E)
         ttk.Entry(self, textvariable=self.imp_inches, state="readonly").grid(row=3, column=4, sticky=W)
 
+    """converts imperial inputs to metric"""    
     def metric_from_imperial(self):
 
         stones_to_kgs = ((int(self.imp_stones.get())) * 6.35)
@@ -200,6 +202,7 @@ class BMIFrame(ttk.Frame):
         ttk.Button(self, text="Calculate BMI", command=self.calculate).grid(row=6, column=3, sticky=E)
         ttk.Button(self, text="Clear", command=self.clear).grid(row=7, column=3, sticky=E)
 
+    """provides information about user's bmi status"""    
     def bmi_info_message(self):
         check = float(self.bmi.get())
 
@@ -212,9 +215,10 @@ class BMIFrame(ttk.Frame):
         else:
             mb.showwarning("Your BMI", "You are Obese")
 
+    """"checks if entry's value is an integer, greater than 1 or empty and returns an appropriate boolean"""        
     def only_numeric_input(self, P):
 
-        """"checks if entry's value is an integer, greater than 1 or empty and returns an appropriate boolean"""
+        
         if P.isdigit() and float(P) > 0:  # if a digit was entered or nothing was entered
             return True
         elif P == "":  # if nothing was entered or digit deleted
